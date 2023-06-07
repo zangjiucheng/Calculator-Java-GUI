@@ -21,6 +21,9 @@ public class Operator {
         this.formula_format = formula_format;
     }
 
+    /**
+     * @return double
+     */
     public double process() {
         double temp_result, result = 0;
         int length, start_position;
@@ -44,6 +47,9 @@ public class Operator {
         return result;
     }
 
+    /**
+     * @return ArrayList<String>
+     */
     private ArrayList<String> split_block() {
         char temp;
         int start_position = 0, temp_app = 0, max_temp = 0, temp_start = 0;
@@ -79,6 +85,10 @@ public class Operator {
         return piece_formula;
     }
 
+    /**
+     * @param temp_formula
+     * @return double
+     */
     private double main_operator(ArrayList<String> temp_formula) {
         double final_result;
         temp_formula = power(temp_formula);
@@ -88,6 +98,10 @@ public class Operator {
         return final_result;
     }
 
+    /**
+     * @param temp_formula
+     * @return ArrayList<String>
+     */
     private ArrayList<String> power(ArrayList<String> temp_formula) {
         double temp_result = 0;
         int temp_size;
@@ -124,6 +138,10 @@ public class Operator {
         return temp_formula;
     }
 
+    /**
+     * @param temp_formula
+     * @return ArrayList<String>
+     */
     private ArrayList<String> multi_divi(ArrayList<String> temp_formula) {
         double temp_result = 0;
         int temp_size;
@@ -161,6 +179,10 @@ public class Operator {
         return temp_formula;
     }
 
+    /**
+     * @param temp_formula
+     * @return ArrayList<String>
+     */
     private ArrayList<String> add_minu(ArrayList<String> temp_formula) {
         double temp_result = 0;
         int temp_size;
@@ -194,6 +216,12 @@ public class Operator {
         return temp_formula;
     }
 
+    /**
+     * @param x
+     * @param temp
+     * @param formula
+     * @return ArrayList<String>
+     */
     private ArrayList<String> single_operator(int x, String temp, ArrayList<String> formula) {
         for (int a = 0; a < 3; a++) {
             formula.remove(x - 1);
@@ -202,14 +230,23 @@ public class Operator {
         return formula;
     }
 
+    /**
+     * @return String
+     */
     public String toString() {
         return String.format("%s", formula_format);
     }
 
+    /**
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getFormula_format() {
         return this.formula_format;
     }
 
+    /**
+     * @param formula_format
+     */
     public void setFormula_format(ArrayList<String> formula_format) {
         this.formula_format = formula_format;
     }

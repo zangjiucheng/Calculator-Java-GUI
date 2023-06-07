@@ -17,6 +17,10 @@ import javax.swing.JPanel;
  */
 
 public class displayElement {
+
+    /**
+     * @param panel
+     */
     public static void displayElementEdit(JPanel panel) {
         panel.setLayout(new GridLayout(0, 1));
         panel.setBackground(Color.white);
@@ -25,6 +29,9 @@ public class displayElement {
         panel.add(numberLabel);
     }
 
+    /**
+     * @param value
+     */
     public static void refreshData(String value) {
         if (value.length() > 42) {
             JOptionPane.showMessageDialog(null, "Warning: Too Long For Display!");

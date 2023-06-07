@@ -19,6 +19,10 @@ import javax.swing.JPanel;
  */
 
 public class operationElement {
+
+    /**
+     * @param panel
+     */
     public static void operationElementEdit(JPanel panel) {
         panel.setLayout(new GridLayout(5, 4));
         int numberIndex = 1;
@@ -117,6 +121,9 @@ public class operationElement {
         }
     }
 
+    /**
+     * @return JPanel
+     */
     private static JPanel basicElementEdit() {
         JPanel panel = new JPanel();
         Utiles.transparentPanel(panel);
@@ -125,6 +132,11 @@ public class operationElement {
 
     }
 
+    /**
+     * @param functionName
+     * @param function
+     * @return JPanel
+     */
     private static JPanel functionElementEdit(String functionName, Function function) {
         JPanel tempPanel = basicElementEdit();
         JButton functionGrid;

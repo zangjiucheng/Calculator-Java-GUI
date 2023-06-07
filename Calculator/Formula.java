@@ -22,6 +22,9 @@ public class Formula {
         this.formula = formula;
     }
 
+    /**
+     * @return ArrayList<String>
+     */
     private ArrayList<String> formula_pop() {
         ArrayList<String> popformula = new ArrayList<String>();
         String[] formula_space = this.formula.split(" ");
@@ -34,6 +37,9 @@ public class Formula {
         return popformula;
     }
 
+    /**
+     * @return ArrayList<String>
+     */
     public ArrayList<String> formula_format() {
         ArrayList<String> input_formula = formula_pop();
         ArrayList<String> formula_format = new ArrayList<String>();
@@ -66,24 +72,40 @@ public class Formula {
         return formula_format;
     }
 
+    /**
+     * @return double
+     */
     public double process() {
         ArrayList<String> format = formula_format();
         Operator ff1 = new Operator(format);
         return ff1.process();
     }
 
+    /**
+     * @return String
+     */
     public String toString() {
         return String.format("%s", formula_format());
     }
 
+    /**
+     * @return String
+     */
     public String getFormula() {
         return this.formula;
     }
 
+    /**
+     * @param formula
+     */
     public void setFormula(String formula) {
         this.formula = formula;
     }
 
+    /**
+     * @param formula
+     * @return Formula
+     */
     public Formula formula(String formula) {
         setFormula(formula);
         return this;
