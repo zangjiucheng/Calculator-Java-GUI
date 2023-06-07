@@ -5,22 +5,22 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Stack;
 
-import javax.management.Query;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Calculator.Formula;
+/**
+ * This class include operationElementEdit.
+ * 
+ * @author Jiucheng Zang
+ * @version 1.2
+ * @since 2023-06-07
+ * @see Calculator.Formula
+ */
 
 public class operationElement {
     public static void operationElementEdit(JPanel panel) {
         panel.setLayout(new GridLayout(5, 4));
-        // panel.setBackground(Color.lightGray);
         int numberIndex = 1;
         for (int numebrOfGrid = 0; numebrOfGrid < 20; numebrOfGrid++) {
             if ((numebrOfGrid % 4 != 3) && (numebrOfGrid > 3) && (numebrOfGrid < 16)) {
@@ -29,8 +29,7 @@ public class operationElement {
                 final int numberCount = numberIndex;
                 numberIndexGrid.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        // System.out.println(numberCount);
-                        inputString = inputString += String.valueOf(numberCount);
+                        inputString += String.valueOf(numberCount);
                         displayElement.refreshData(inputString);
                     }
                 });
@@ -40,27 +39,18 @@ public class operationElement {
                 panel.add(tempPanel);
                 numberIndex++;
             } else {
-                JPanel tempPanel = basicElementEdit();
-                JButton functionGrid;
+
                 switch (numebrOfGrid) {
                     case 0: // Clear
-                        functionGrid = new JButton("AC");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = "";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+                        panel.add(functionElementEdit("AC", new Clear()));
                         break;
-                    case 1:
+
+                    case 1: // ( )
+                        JPanel tempPanel = basicElementEdit();
+                        JButton functionGrid;
                         tempPanel.setLayout(new GridLayout(0, 2));
                         functionGrid = new JButton("(");
                         JButton functionGrid2 = new JButton(")");
-
                         functionGrid.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 inputString += "(";
@@ -80,152 +70,75 @@ public class operationElement {
                         tempPanel.setBackground(Color.green);
                         panel.add(tempPanel);
                         break;
-                    case 2:
-                        functionGrid = new JButton("⬅");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                if (inputString.length() != 0)
-                                    inputString = inputString.substring(0, inputString.length() - 1);
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+
+                    case 2: // Backspace
+                        panel.add(functionElementEdit("⬅", new Backspace()));
                         break;
 
-                    case 3: // / sign
-                        functionGrid = new JButton("➗");
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "/";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+                    case 3: // divide
+                        panel.add(functionElementEdit("➗", new Divide()));
                         break;
-                    case 7: // x sign
-                        functionGrid = new JButton("x");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "*";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+
+                    case 7: // multiply
+                        panel.add(functionElementEdit("x", new Mutiple()));
                         break;
-                    case 11: // - sign
-                        functionGrid = new JButton("-");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "-";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+
+                    case 11: // minus
+                        panel.add(functionElementEdit("-", new Minus()));
                         break;
-                    case 15: // + sign
-                        functionGrid = new JButton("+");
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "+";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+
+                    case 15: // plus
+                        panel.add(functionElementEdit("+", new Plus()));
                         break;
+
                     case 16: // number 0
-                        functionGrid = new JButton("0");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "0";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+                        panel.add(functionElementEdit("0", new Zero()));
                         break;
-                    case 17:
-                        functionGrid = new JButton("10^n");
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += "*10^";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+
+                    case 17: // 10^n
+                        panel.add(functionElementEdit("10^n", new Multiplier()));
                         break;
 
                     case 18: // point
-                        functionGrid = new JButton(".");
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                inputString = inputString += ".";
-                                displayElement.refreshData(inputString);
-                            }
-                        });
-                        tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+                        panel.add(functionElementEdit(".", new Point()));
                         break;
+
                     case 19: // equal
-                        functionGrid = new JButton("=");
-                        functionGrid.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                Formula f1 = new Formula(inputString);
-                                try {
-                                    inputString = String.valueOf(f1.process());
-                                    displayElement.refreshData(inputString);
-                                    // System.out.println(f1.process());
-                                } catch (IllegalArgumentException ex) {
-                                    System.out.println(ex);
-                                }
-                            }
-                        });
-                        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
-                        tempPanel.add(functionGrid);
-                        // tempPanel.setBackground(Color.green);
-                        panel.add(tempPanel);
+                        panel.add(functionElementEdit("=", new Equal()));
                         break;
+
                     default:
-                        tempPanel.setBackground(Color.blue);
-                        panel.add(tempPanel);
+                        JPanel BlackPanel = basicElementEdit();
+                        panel.add(BlackPanel);
                         break;
                 }
 
             }
         }
-        // ArrayList<Color> colorList = new ArrayList() { new Color.blue
-        // };
     }
 
-    protected static String inputString = "";
-
     private static JPanel basicElementEdit() {
-
         JPanel panel = new JPanel();
         Utiles.transparentPanel(panel);
         panel.setLayout(new GridLayout(0, 1));
         return panel;
 
     }
+
+    private static JPanel functionElementEdit(String functionName, Function function) {
+        JPanel tempPanel = basicElementEdit();
+        JButton functionGrid;
+        functionGrid = new JButton(functionName);
+        functionGrid.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                function.run();
+            }
+        });
+        functionGrid.setFont(new Font("Arial", Font.PLAIN, 25));
+        tempPanel.add(functionGrid);
+        return tempPanel;
+    }
+
+    protected static String inputString = "";
+
 }

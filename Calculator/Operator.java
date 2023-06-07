@@ -2,6 +2,14 @@ package Calculator;
 
 import java.util.ArrayList;
 
+/**
+ * This class operator the formula.
+ * 
+ * @auther Jiucheng Zang
+ * @version 1.1
+ * @since 2022-12-20
+ */
+
 public class Operator {
     private ArrayList<String> formula_format;
 

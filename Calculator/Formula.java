@@ -3,6 +3,14 @@ package Calculator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class create a formula object with function process the formula.
+ * 
+ * @auther Jiucheng Zang
+ * @version 1.1
+ * @since 2022-12-20
+ */
+
 public class Formula {
     private String formula;
 
